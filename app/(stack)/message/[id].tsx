@@ -164,7 +164,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { AudioLines } from 'lucide-react-native';
+import { AudioLines, Phone, Plus, Video } from 'lucide-react-native';
 import { colors } from 'theme/color';
 import { conversationMessages, messagesArray } from 'utils/messages';
 import { Stack } from 'expo-router';
@@ -197,12 +197,30 @@ export default function MessageThreadScreen() {
     <>
       <Stack.Screen
         options={{
+          headerStyle: {
+            backgroundColor: '#09090b',
+          },
+          headerTintColor: '#fff',
+          title: '',
           headerBackTitle: userData?.name,
+          headerTitleAlign: 'center',
           headerTitle() {
             return (
               <View style={styles.headerUserInfo}>
                 <Image style={styles.headerUserAvatar} source={userData?.avatar} />
                 <Text style={styles.headerUserName}>{userData?.name}</Text>
+              </View>
+            );
+          },
+          headerRight() {
+            return (
+              <View style={styles.headerIconsRight}>
+                <TouchableOpacity>
+                  <Phone size={24} color={colors.zinc['600']} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Video size={24} color={colors.zinc['600']} />
+                </TouchableOpacity>
               </View>
             );
           },
@@ -221,7 +239,7 @@ export default function MessageThreadScreen() {
           contentContainerStyle={styles.messageList}
         />
 
-        <View style={styles.inputWrapper}>
+        {/* <View style={styles.inputWrapper}>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
@@ -229,6 +247,28 @@ export default function MessageThreadScreen() {
               placeholder="To: company name"
             />
             <TouchableOpacity style={styles.iconContainer}>
+              <AudioLines size={24} color={colors.zinc['600']} />
+            </TouchableOpacity>
+          </View>
+        </View> */}
+        <View style={styles.inputWrapper}>
+          <View style={styles.inputRow}>
+            {/* Audio icon (left) */}
+            <TouchableOpacity style={styles.iconButton}>
+              <Plus size={24} color={colors.zinc['600']} />
+            </TouchableOpacity>
+
+            {/* Input field (center) */}
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholderTextColor={colors.zinc[400]}
+                placeholder="To: company name"
+              />
+            </View>
+
+            {/* Plus icon (right) */}
+            <TouchableOpacity style={styles.iconButton}>
               <AudioLines size={24} color={colors.zinc['600']} />
             </TouchableOpacity>
           </View>
@@ -241,8 +281,9 @@ export default function MessageThreadScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.zinc[100],
+    backgroundColor: '#09090b',
   },
+
   headerUserInfo: {
     flexDirection: 'column',
     alignItems: 'center',
@@ -256,7 +297,14 @@ const styles = StyleSheet.create({
   headerUserName: {
     fontSize: 11,
     lineHeight: 13,
-    color: colors.zinc['800'],
+    color: '#a1a1aa',
+  },
+  headerIconsRight: {
+    flexDirection: 'row', // lays items side by side
+    alignItems: 'center', // vertical alignment
+    justifyContent: 'flex-end', // pushes icons to the right edge
+    gap: 12, // spacing between icons (RN 0.71+)
+    paddingRight: 8, // optional extra spacing from the screen edge
   },
   messageList: {
     padding: 16,
@@ -264,29 +312,41 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     width: '100%',
-    backgroundColor: colors.zinc[50],
+    backgroundColor: '#09090b',
     paddingVertical: 8,
     paddingHorizontal: 16,
     paddingBottom: 24,
   },
-  inputContainer: {
+
+  inputRow: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
-    height: 32,
+    width: '100%',
+  },
+
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.zinc[300],
     borderRadius: 32,
-    padding: 8,
     paddingHorizontal: 16,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    height: 32,
+    backgroundColor: '#18181b',
   },
+
   input: {
     flex: 1,
     color: colors.zinc[900],
     paddingVertical: 0,
+    marginVertical: 0,
   },
-  iconContainer: {},
+
+  iconButton: {
+    padding: 4,
+  },
   blankState: {
     flex: 1,
     justifyContent: 'center',

@@ -1,8 +1,17 @@
 // components/Header.tsx
-import { View, Text, Image, TextInput, StyleSheet, useWindowDimensions } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  StyleSheet,
+  useWindowDimensions,
+  TouchableOpacity,
+} from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { colors } from 'theme/color';
 import { messagesArray } from 'utils/messages';
+import { Phone, Video } from 'lucide-react-native';
 
 type HeaderProps = {
   onSearchChange?: (text: string) => void;
@@ -26,7 +35,6 @@ export const Header = ({ onSearchChange, onSearchSubmit, searchValue }: HeaderPr
       ) : (
         <Text style={styles.title}>Messages</Text>
       )}
-
       {onSearchChange && (
         <TextInput
           value={searchValue}
@@ -37,6 +45,16 @@ export const Header = ({ onSearchChange, onSearchSubmit, searchValue }: HeaderPr
           style={styles.search}
         />
       )}
+      {selectedConversation && (
+        <>
+          <TouchableOpacity>
+            <Phone size={24} color={colors.zinc['600']} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Video size={24} color={colors.zinc['600']} />
+          </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 };
@@ -44,9 +62,9 @@ export const Header = ({ onSearchChange, onSearchSubmit, searchValue }: HeaderPr
 const styles = StyleSheet.create({
   header: {
     paddingVertical: 12,
-    backgroundColor: colors.zinc[100],
+    backgroundColor: '#09090b',
     borderBottomWidth: 1,
-    borderColor: colors.zinc[300],
+    borderColor: '#a1a1aa',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -77,7 +95,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
-    backgroundColor: colors.zinc[200],
+    backgroundColor: '#18181b',
     fontSize: 16,
     color: colors.zinc[900],
   },

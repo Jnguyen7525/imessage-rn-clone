@@ -33,14 +33,13 @@ export default function Home() {
     );
   };
 
-    const handleSelectMessage = (id: string) => {
-      if (isLargeScreen) {
-        router.replace(`/message/${id}`);
-      } else {
-        router.push(`/message/${id}`);
-      }
-    };
-
+  const handleSelectMessage = (id: string) => {
+    if (isLargeScreen) {
+      router.replace(`/message/${id}`);
+    } else {
+      router.push(`/message/${id}`);
+    }
+  };
 
   return (
     // <>
@@ -76,11 +75,15 @@ export default function Home() {
     <>
       <Stack.Screen
         options={{
+          headerStyle: {
+            backgroundColor: '#fff',
+          },
+          headerTintColor: '#a1a1aa',
           title: 'Messages',
           headerLargeTitle: true,
           headerSearchBarOptions: {
             hideWhenScrolling: true,
-            placeholder: 'Pesquisar',
+            placeholder: 'Search...',
             hideNavigationBar: true,
             obscureBackground: true,
             onSearchButtonPress: ({ nativeEvent }) => {
@@ -92,7 +95,7 @@ export default function Home() {
       />
 
       <SafeAreaView style={styles.container}>
-        <StatusBar style="dark" backgroundColor={colors.zinc[100]} />
+        <StatusBar style="dark" backgroundColor={'#09090b'} />
 
         <FlatList
           data={messages}
@@ -111,7 +114,8 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.zinc[100],
+    backgroundColor: '#09090b',
+    paddingTop: 20,
   },
 
   messageContainer: {

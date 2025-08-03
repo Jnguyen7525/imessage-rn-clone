@@ -38,7 +38,14 @@
 
 // app/(main)/_layout.tsx
 import { useLocalSearchParams } from 'expo-router';
-import { View, useWindowDimensions, Text } from 'react-native';
+import {
+  View,
+  useWindowDimensions,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import { colors } from 'theme/color';
 import { messagesArray, conversationMessages } from 'utils/messages';
 import { Message } from 'components/Message';
@@ -48,6 +55,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Header } from 'components/Header';
+import { AudioLines, Plus } from 'lucide-react-native';
 
 export default function Layout() {
   const { width } = useWindowDimensions();
@@ -84,14 +92,14 @@ export default function Layout() {
     // return <Slot />; // Mobile: let routing work normally
     return (
       <>
-        <StatusBar backgroundColor={colors.zinc['100']} style="dark" />
+        <StatusBar backgroundColor={'#09090b'} style="dark" />
         <Stack />
       </>
     );
   }
 
   return (
-    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: colors.zinc[100] }}>
+    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#09090b' }}>
       {/* 🔝 Header */}
       <Header
         onSearchChange={handleSearchChange}
@@ -106,7 +114,7 @@ export default function Layout() {
           style={{
             width: 320,
             borderRightWidth: 1,
-            borderColor: colors.zinc[300],
+            borderColor: '#a1a1aa',
             padding: 16,
             gap: 12,
           }}>
@@ -124,6 +132,43 @@ export default function Layout() {
               {conversationMessages.map((msg) => (
                 <ConversationMessage key={msg.id} data={msg} />
               ))}
+
+              {/* <View style={styles.inputWrapper}>
+                <Plus size={24} color={colors.zinc['600']}/>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.input}
+                    placeholderTextColor={colors.zinc[400]}
+                    placeholder="To: company name"
+                  />
+                  <TouchableOpacity style={styles.iconContainer}>
+                    <AudioLines size={24} color={colors.zinc['600']} />
+                  </TouchableOpacity>
+                </View>
+              </View> */}
+              <View style={styles.inputWrapper}>
+                <View style={styles.inputRow}>
+                  {/* Audio icon (left) */}
+                  <TouchableOpacity style={styles.iconButton}>
+                    {' '}
+                    <Plus size={24} color={colors.zinc['600']} />
+                  </TouchableOpacity>
+
+                  {/* Input field (center) */}
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      style={styles.input}
+                      placeholderTextColor={colors.zinc[400]}
+                      placeholder="To: company name"
+                    />
+                  </View>
+
+                  {/* Plus icon (right) */}
+                  <TouchableOpacity style={styles.iconButton}>
+                    <AudioLines size={24} color={colors.zinc['600']} />
+                  </TouchableOpacity>
+                </View>
+              </View>
             </>
           ) : (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -137,3 +182,43 @@ export default function Layout() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  inputWrapper: {
+    width: '100%',
+    backgroundColor: colors.zinc[50],
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    paddingBottom: 24,
+  },
+
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    width: '100%',
+  },
+
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.zinc[300],
+    borderRadius: 32,
+    paddingHorizontal: 16,
+    height: 32,
+    backgroundColor: colors.zinc[100],
+  },
+
+  input: {
+    flex: 1,
+    color: colors.zinc[900],
+    paddingVertical: 0,
+    marginVertical: 0,
+  },
+
+  iconButton: {
+    padding: 4,
+  },
+});
