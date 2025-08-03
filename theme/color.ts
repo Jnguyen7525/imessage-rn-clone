@@ -18,6 +18,7 @@ export const colors = isDarkMode
         '100': '#18181b',
         '50': '#09090b',
       },
+
       blue: {
         normal: '#007AFF',
       },

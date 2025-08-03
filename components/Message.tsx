@@ -5,27 +5,48 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors } from 'theme/color';
 import { messagesArray } from 'utils/messages';
 
+// type MessageProps = {
+//   data: (typeof messagesArray)[0];
+// };
+
+// export const Message = (props: MessageProps) => {
+//   const router = useRouter();
+
+//   const handlePress = () => {
+//     router.push(`/(stack)/message/${props.data.id}`);
+//   };
+
+//   return (
+//     <TouchableOpacity onPress={handlePress} style={styles.container}>
+//       <Image source={props.data.avatar} style={styles.avatar} />
+//       <View style={styles.textsContainer}>
+//         <View style={styles.textsFirstRow}>
+//             <Text style={styles.textSenderName}>{props.data.name}</Text>
+//           <Text style={styles.textSentTime}>{props.data.time}</Text>
+//         </View>
+//         <Text style={styles.textsMessagePreview} numberOfLines={2}>
+//           {props.data.message}
+//         </Text>
+//       </View>
+//     </TouchableOpacity>
+//   );
+// };
 type MessageProps = {
   data: (typeof messagesArray)[0];
+  onPress?: () => void; // 👈 Add this prop
 };
 
-export const Message = (props: MessageProps) => {
-  const router = useRouter();
-
-  const handlePress = () => {
-    router.push(`/(stack)/message/${props.data.id}`);
-  };
-
+export const Message = ({ data, onPress }: MessageProps) => {
   return (
-    <TouchableOpacity onPress={handlePress} style={styles.container}>
-      <Image source={props.data.avatar} style={styles.avatar} />
+    <TouchableOpacity onPress={onPress} style={styles.container}>
+      <Image source={data.avatar} style={styles.avatar} />
       <View style={styles.textsContainer}>
         <View style={styles.textsFirstRow}>
-          <Text style={styles.textSenderName}>{props.data.name}</Text>
-          <Text style={styles.textSentTime}>{props.data.time}</Text>
+          <Text style={styles.textSenderName}>{data.name}</Text>
+          <Text style={styles.textSentTime}>{data.time}</Text>
         </View>
         <Text style={styles.textsMessagePreview} numberOfLines={2}>
-          {props.data.message}
+          {data.message}
         </Text>
       </View>
     </TouchableOpacity>
