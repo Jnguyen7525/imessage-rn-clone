@@ -1,10 +1,10 @@
-interface Message {
+export interface MessageType {
   id: number;
   amISender: boolean;
   text: string;
 }
 
-export const conversationMessages: Message[] = [
+export const conversationMessages: MessageType[] = [
   { id: 1, amISender: true, text: 'Olá, como vai?' },
   { id: 2, amISender: false, text: 'Estou bem, obrigado! E você?' },
   { id: 3, amISender: true, text: 'Tudo bem por aqui também, obrigado!' },

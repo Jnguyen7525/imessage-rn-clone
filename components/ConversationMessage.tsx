@@ -39,10 +39,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderRadius: 15,
+    zIndex: 0,
   },
 
   text: {
     fontSize: 16,
     lineHeight: 22,
+    zIndex: 0,
   },
 });

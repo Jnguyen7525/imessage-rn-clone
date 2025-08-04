@@ -6,11 +6,20 @@ import Constants from 'expo-constants';
 import { Stack, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { FlatList, Platform, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import {
+  FlatList,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from 'theme/color';
 import { messagesArray } from 'utils/messages';
 import '../global.css';
+import { Ellipsis, Phone, Video } from 'lucide-react-native';
 
 export default function Home() {
   const [search, setSearch] = React.useState('');
@@ -76,26 +85,40 @@ export default function Home() {
       <Stack.Screen
         options={{
           headerStyle: {
-            backgroundColor: '#fff',
+            // backgroundColor: '#09090b',
+            backgroundColor: 'rgba(60, 60, 65, 0.3)',
           },
-          headerTintColor: '#a1a1aa',
+          headerTintColor: '#fff',
           title: 'Messages',
           headerLargeTitle: true,
+          headerTransparent: true,
+          headerBlurEffect: 'systemChromeMaterialDark',
           headerSearchBarOptions: {
             hideWhenScrolling: true,
             placeholder: 'Search...',
             hideNavigationBar: true,
             obscureBackground: true,
+            tintColor: '#52525b', // 👈 makes native search icon white for ios
+            headerIconColor: '#52525b', // 👈 makes native search icon white for ios
             onSearchButtonPress: ({ nativeEvent }) => {
               handleSearchChange(nativeEvent.text);
               handleSearch();
             },
           },
+          headerRight() {
+            return (
+              <View style={styles.headerIconsRight}>
+                <TouchableOpacity>
+                  <Ellipsis size={24} color={colors.zinc['600']} />
+                </TouchableOpacity>
+              </View>
+            );
+          },
         }}
       />
 
       <SafeAreaView style={styles.container}>
-        <StatusBar style="dark" backgroundColor={'#09090b'} />
+        <StatusBar style="light" />
 
         <FlatList
           data={messages}
@@ -115,7 +138,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#09090b',
-    paddingTop: 20,
+    paddingTop: 80,
   },
 
   messageContainer: {
@@ -124,5 +147,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     // paddingTop: Constants.statusBarHeight * 2,
     // paddingBottom: 44,
+  },
+
+  headerIconsRight: {
+    flexDirection: 'row', // lays items side by side
+    alignItems: 'center', // vertical alignment
+    justifyContent: 'flex-end', // pushes icons to the right edge
+    gap: 0, // spacing between icons (RN 0.71+)
+    paddingRight: 0, // optional extra spacing from the screen edge
   },
 });

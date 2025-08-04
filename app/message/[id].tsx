@@ -226,7 +226,7 @@ export default function MessageThreadScreen() {
             <TextInput
               style={styles.input}
               placeholderTextColor={colors.zinc[400]}
-              placeholder="To: company name"
+              placeholder="Message"
             />
             <TouchableOpacity style={styles.iconContainer}>
               <AudioLines size={24} color={colors.zinc['600']} />

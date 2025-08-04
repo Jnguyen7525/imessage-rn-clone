@@ -37,7 +37,7 @@
 // }
 
 // app/(main)/_layout.tsx
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useGlobalSearchParams } from 'expo-router';
 import {
   View,
   useWindowDimensions,
@@ -45,9 +45,10 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ImageSourcePropType,
 } from 'react-native';
 import { colors } from 'theme/color';
-import { messagesArray, conversationMessages } from 'utils/messages';
+import { messagesArray, conversationMessages, MessageType } from 'utils/messages';
 import { Message } from 'components/Message';
 import { ConversationMessage } from 'components/ConversationMessage';
 import { router, Slot } from 'expo-router';
@@ -56,12 +57,39 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Header } from 'components/Header';
 import { AudioLines, Plus } from 'lucide-react-native';
+import { useConversationStore } from 'store/useConversationStore';
 
 export default function Layout() {
   const { width } = useWindowDimensions();
   const isLargeScreen = width >= 768;
-  const { id } = useLocalSearchParams();
-  const selectedConversation = messagesArray.find((msg) => msg.id === id);
+  // const { id } = useLocalSearchParams();
+  const { id } = useGlobalSearchParams();
+  // const selectedConversation = messagesArray.find((msg) => msg.id === id);
+  // const [selectedConversation, setSelectedConversation] = React.useState<
+  //   | {
+  //       id: string;
+  //       name: string;
+  //       message: string;
+  //       time: string;
+  //       avatar: ImageSourcePropType;
+  //     }
+  //   | undefined
+  // >(undefined);
+  const setSelectedConversation = useConversationStore((state) => state.setSelectedConversation);
+  const selectedConversation = useConversationStore((state) => state.selectedConversation);
+
+  const showOptions = useConversationStore((state) => state.showOptions);
+
+  // React.useEffect(() => {
+  //   if (id && messagesArray.length > 0) {
+  //     const found = messagesArray.find((msg) => String(msg.id) === String(id));
+  //     setSelectedConversation(found);
+  //   }
+  // }, [id, messagesArray]);
+
+  React.useEffect(() => {
+    console.log('Selected conversation:', selectedConversation);
+  }, [selectedConversation]);
 
   const [search, setSearch] = React.useState('');
   const [messages, setMessages] = React.useState(messagesArray);
@@ -80,32 +108,73 @@ export default function Layout() {
     );
   };
 
+  // const handleSelectMessage = (id: string) => {
+  //   const selected = messagesArray.find((msg) => msg.id === id);
+  //   setSelectedConversation(selected);
+  //   router.push(`/message/${id}`);
+  // };
   const handleSelectMessage = (id: string) => {
-    if (isLargeScreen) {
-      router.replace(`/message/${id}`);
-    } else {
-      router.push(`/message/${id}`);
-    }
+    const selected = messagesArray.find((msg) => msg.id === id);
+    setSelectedConversation(selected);
+    router.push(`/message/${id}`);
   };
 
   if (!isLargeScreen) {
     // return <Slot />; // Mobile: let routing work normally
     return (
       <>
-        <StatusBar backgroundColor={'#09090b'} style="dark" />
+        <StatusBar style="light" />
         <Stack />
       </>
     );
   }
 
   return (
-    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#09090b' }}>
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#09090b',
+        position: 'relative',
+      }}>
       {/* 🔝 Header */}
       <Header
         onSearchChange={handleSearchChange}
         onSearchSubmit={handleSearch}
         searchValue={search}
       />
+      {showOptions && (
+        <View style={styles.dropdown}>
+          <TouchableOpacity
+            style={styles.optionButton}
+            onPress={() => {
+              /* View Contact */
+            }}>
+            <Text style={styles.optionText}>View Contact</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.optionButton}
+            onPress={() => {
+              /* Mute Conversation */
+            }}>
+            <Text style={styles.optionText}>Mute</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.optionButton}
+            onPress={() => {
+              /* Block User */
+            }}>
+            <Text style={styles.optionText}>Block</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.optionButton}
+            onPress={() => {
+              /* Delete Conversation */
+            }}>
+            <Text style={styles.optionText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       {/* 🧱 Split layout below */}
       <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -119,7 +188,9 @@ export default function Layout() {
             gap: 12,
           }}>
           {messagesArray.map((msg) => (
-            <Message key={msg.id} data={msg} onPress={() => router.replace(`/message/${msg.id}`)} />
+            // <Message key={msg.id} data={msg} onPress={() => router.replace(`/message/${msg.id}`)} />
+            // <Message key={msg.id} data={msg} onPress={() => router.push(`/message/${msg.id}`)} />
+            <Message key={msg.id} data={msg} onPress={() => handleSelectMessage(msg.id)} />
           ))}
         </View>
         {/* Conversation Thread */}
@@ -133,24 +204,10 @@ export default function Layout() {
                 <ConversationMessage key={msg.id} data={msg} />
               ))}
 
-              {/* <View style={styles.inputWrapper}>
-                <Plus size={24} color={colors.zinc['600']}/>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    style={styles.input}
-                    placeholderTextColor={colors.zinc[400]}
-                    placeholder="To: company name"
-                  />
-                  <TouchableOpacity style={styles.iconContainer}>
-                    <AudioLines size={24} color={colors.zinc['600']} />
-                  </TouchableOpacity>
-                </View>
-              </View> */}
               <View style={styles.inputWrapper}>
                 <View style={styles.inputRow}>
                   {/* Audio icon (left) */}
                   <TouchableOpacity style={styles.iconButton}>
-                    {' '}
                     <Plus size={24} color={colors.zinc['600']} />
                   </TouchableOpacity>
 
@@ -159,14 +216,13 @@ export default function Layout() {
                     <TextInput
                       style={styles.input}
                       placeholderTextColor={colors.zinc[400]}
-                      placeholder="To: company name"
+                      placeholder="Message"
                     />
+                    {/* Plus icon (right) */}
+                    <TouchableOpacity style={styles.iconButton}>
+                      <AudioLines size={24} color={colors.zinc['600']} />
+                    </TouchableOpacity>
                   </View>
-
-                  {/* Plus icon (right) */}
-                  <TouchableOpacity style={styles.iconButton}>
-                    <AudioLines size={24} color={colors.zinc['600']} />
-                  </TouchableOpacity>
                 </View>
               </View>
             </>
@@ -177,7 +233,7 @@ export default function Layout() {
               </Text>
             </View>
           )}
-        </View>{' '}
+        </View>
       </View>
     </View>
   );
@@ -208,7 +264,7 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     paddingHorizontal: 16,
     height: 32,
-    backgroundColor: colors.zinc[100],
+    backgroundColor: '#09090b',
   },
 
   input: {
@@ -220,5 +276,27 @@ const styles = StyleSheet.create({
 
   iconButton: {
     padding: 4,
+  },
+
+  dropdown: {
+    position: 'absolute',
+    top: 60, // adjust based on header height
+    right: 16,
+    backgroundColor: '#1f1f1f',
+    borderRadius: 8,
+    paddingVertical: 8,
+    zIndex: 9999,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  optionButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  optionText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });

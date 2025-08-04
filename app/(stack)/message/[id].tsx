@@ -164,7 +164,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { AudioLines, Phone, Plus, Video } from 'lucide-react-native';
+import { AudioLines, Ellipsis, Phone, Plus, Video } from 'lucide-react-native';
 import { colors } from 'theme/color';
 import { conversationMessages, messagesArray } from 'utils/messages';
 import { Stack } from 'expo-router';
@@ -198,9 +198,14 @@ export default function MessageThreadScreen() {
       <Stack.Screen
         options={{
           headerStyle: {
-            backgroundColor: '#09090b',
+            // backgroundColor: '#09090b',
+            // backgroundColor: 'rgba(138, 43, 226, 0.25)',
+            backgroundColor: 'rgba(60, 60, 65, 0.3)',
           },
-          headerTintColor: '#fff',
+          headerTintColor: '#007AFF',
+          headerLargeTitle: true,
+          headerTransparent: true,
+          headerBlurEffect: 'systemUltraThinMaterialDark',
           title: '',
           headerBackTitle: userData?.name,
           headerTitleAlign: 'center',
@@ -220,6 +225,9 @@ export default function MessageThreadScreen() {
                 </TouchableOpacity>
                 <TouchableOpacity>
                   <Video size={24} color={colors.zinc['600']} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Ellipsis size={24} color={colors.zinc['600']} />
                 </TouchableOpacity>
               </View>
             );
@@ -263,14 +271,17 @@ export default function MessageThreadScreen() {
               <TextInput
                 style={styles.input}
                 placeholderTextColor={colors.zinc[400]}
-                placeholder="To: company name"
+                placeholder="Message"
               />
+              <TouchableOpacity style={styles.iconButton}>
+                <AudioLines size={24} color={colors.zinc['600']} />
+              </TouchableOpacity>
             </View>
 
             {/* Plus icon (right) */}
-            <TouchableOpacity style={styles.iconButton}>
+            {/* <TouchableOpacity style={styles.iconButton}>
               <AudioLines size={24} color={colors.zinc['600']} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -282,6 +293,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#09090b',
+    // backgroundColor: '#ffff',
+    paddingTop: 80,
   },
 
   headerUserInfo: {
@@ -297,7 +310,7 @@ const styles = StyleSheet.create({
   headerUserName: {
     fontSize: 11,
     lineHeight: 13,
-    color: '#a1a1aa',
+    color: '#ffff',
   },
   headerIconsRight: {
     flexDirection: 'row', // lays items side by side
@@ -334,12 +347,12 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     paddingHorizontal: 16,
     height: 32,
-    backgroundColor: '#18181b',
+    backgroundColor: '#09090b',
   },
 
   input: {
     flex: 1,
-    color: colors.zinc[900],
+    color: '#ffff',
     paddingVertical: 0,
     marginVertical: 0,
   },
