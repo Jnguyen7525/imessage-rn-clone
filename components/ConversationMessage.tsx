@@ -15,14 +15,14 @@ export const ConversationMessage = (props: ConversationMessageProps) => {
         styles.container,
         {
           alignSelf: props.data.amISender ? 'flex-end' : 'flex-start',
-          backgroundColor: props.data.amISender ? colors.blue['normal'] : colors.zinc['300'],
+          backgroundColor: props.data.amISender ? colors.blue['normal'] : '#18181b',
         },
       ]}>
       <Text
         style={[
           styles.text,
           {
-            color: props.data.amISender ? colors.zinc['100'] : colors.zinc['900'],
+            color: props.data.amISender ? colors.zinc['100'] : '#ffff',
           },
         ]}>
         {props.data.text}
