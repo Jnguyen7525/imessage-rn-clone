@@ -164,16 +164,24 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { AudioLines, Ellipsis, Phone, Plus, Video } from 'lucide-react-native';
+import { AudioLines, Ellipsis, Phone, Plus, Search, Video, X } from 'lucide-react-native';
 import { colors } from 'theme/color';
 import { conversationMessages, messagesArray } from 'utils/messages';
 import { Stack } from 'expo-router';
+import { useConversationStore } from 'store/useConversationStore';
+import React from 'react';
 
 export default function MessageThreadScreen() {
   const { id } = useLocalSearchParams();
   const { width } = useWindowDimensions();
   const isLargeScreen = width >= 768;
   const userData = messagesArray.find((item) => item.id === id);
+
+  const [showSearchBar, setShowSearchBar] = React.useState(false);
+  const [searchText, setSearchText] = React.useState('');
+
+  const toggleShowOptions = useConversationStore((state) => state.toggleShowOptions);
+  const showOptions = useConversationStore((state) => state.showOptions);
 
   // ✨ Fallback for large screens with no selection
   if (isLargeScreen && !id) {
@@ -198,11 +206,10 @@ export default function MessageThreadScreen() {
       <Stack.Screen
         options={{
           headerStyle: {
-            // backgroundColor: '#09090b',
-            // backgroundColor: 'rgba(138, 43, 226, 0.25)',
             backgroundColor: 'rgba(60, 60, 65, 0.3)',
           },
           headerTintColor: '#007AFF',
+          headerShown: showSearchBar ? false : true,
           headerLargeTitle: true,
           headerTransparent: true,
           headerBlurEffect: 'systemUltraThinMaterialDark',
@@ -227,6 +234,13 @@ export default function MessageThreadScreen() {
                   <Video size={24} color={colors.zinc['600']} />
                 </TouchableOpacity>
                 <TouchableOpacity>
+                  <Search
+                    size={24}
+                    color={colors.zinc['600']}
+                    onPress={() => setShowSearchBar(true)}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={toggleShowOptions}>
                   <Ellipsis size={24} color={colors.zinc['600']} />
                 </TouchableOpacity>
               </View>
@@ -234,6 +248,60 @@ export default function MessageThreadScreen() {
           },
         }}
       />
+
+      {showSearchBar && (
+        <View style={styles.searchBarContainer}>
+          <View style={styles.searchInputContainer}>
+            <TextInput
+              value={searchText}
+              onChangeText={setSearchText}
+              placeholder="Search..."
+              placeholderTextColor={colors.zinc[500]}
+              style={styles.searchInput}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                setShowSearchBar(false);
+                setSearchText('');
+              }}>
+              <X size={20} color={colors.zinc['600']} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+
+      {showOptions && (
+        <View style={styles.dropdown}>
+          <TouchableOpacity
+            style={styles.optionButton}
+            onPress={() => {
+              /* View Contact */
+            }}>
+            <Text style={styles.optionText}>View Contact</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.optionButton}
+            onPress={() => {
+              /* Mute Conversation */
+            }}>
+            <Text style={styles.optionText}>Mute</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.optionButton}
+            onPress={() => {
+              /* Block User */
+            }}>
+            <Text style={styles.optionText}>Block</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.optionButton}
+            onPress={() => {
+              /* Delete Conversation */
+            }}>
+            <Text style={styles.optionText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       <KeyboardAvoidingView
         behavior="padding"
@@ -247,21 +315,8 @@ export default function MessageThreadScreen() {
           contentContainerStyle={styles.messageList}
         />
 
-        {/* <View style={styles.inputWrapper}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholderTextColor={colors.zinc[400]}
-              placeholder="To: company name"
-            />
-            <TouchableOpacity style={styles.iconContainer}>
-              <AudioLines size={24} color={colors.zinc['600']} />
-            </TouchableOpacity>
-          </View>
-        </View> */}
         <View style={styles.inputWrapper}>
           <View style={styles.inputRow}>
-            {/* Audio icon (left) */}
             <TouchableOpacity style={styles.iconButton}>
               <Plus size={24} color={colors.zinc['600']} />
             </TouchableOpacity>
@@ -277,11 +332,6 @@ export default function MessageThreadScreen() {
                 <AudioLines size={24} color={colors.zinc['600']} />
               </TouchableOpacity>
             </View>
-
-            {/* Plus icon (right) */}
-            {/* <TouchableOpacity style={styles.iconButton}>
-              <AudioLines size={24} color={colors.zinc['600']} />
-            </TouchableOpacity> */}
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -294,7 +344,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#09090b',
     // backgroundColor: '#ffff',
-    paddingTop: 80,
+    paddingTop: 100,
   },
 
   headerUserInfo: {
@@ -317,7 +367,6 @@ const styles = StyleSheet.create({
     alignItems: 'center', // vertical alignment
     justifyContent: 'flex-end', // pushes icons to the right edge
     gap: 12, // spacing between icons (RN 0.71+)
-    paddingRight: 8, // optional extra spacing from the screen edge
   },
   messageList: {
     padding: 16,
@@ -369,5 +418,60 @@ const styles = StyleSheet.create({
   blankStateText: {
     fontSize: 16,
     color: colors.zinc[600],
+  },
+
+  dropdown: {
+    position: 'absolute',
+    top: 100, // adjust based on header height
+    right: 0,
+    backgroundColor: '#1f1f1f',
+    borderRadius: 8,
+    paddingVertical: 8,
+    zIndex: 9999,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    width: 180,
+  },
+  optionButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  optionText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+
+  searchBarContainer: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    backgroundColor: 'rgba(60, 60, 65, 0.3)',
+    borderRadius: 0,
+    paddingHorizontal: 12,
+    width: '100%',
+    height: '11%',
+    flex: 1,
+    zIndex: 999,
+  },
+
+  searchInputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    fontSize: 16,
+    paddingHorizontal: 10,
+    borderColor: '#ccc', // ✅ Add a visible border color
+    borderWidth: 1, // ✅ Define border width
+    borderRadius: 999, // ✅ Add rounded corners
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: '#fff',
   },
 });

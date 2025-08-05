@@ -12,7 +12,7 @@ import {
 import { useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 import { colors } from 'theme/color';
 import { messagesArray } from 'utils/messages';
-import { Ellipsis, Phone, Video } from 'lucide-react-native';
+import { Ellipsis, Phone, Search, Video } from 'lucide-react-native';
 import React from 'react';
 import { useConversationStore } from 'store/useConversationStore';
 
@@ -23,17 +23,12 @@ type HeaderProps = {
 };
 
 export const Header = ({ onSearchChange, onSearchSubmit, searchValue }: HeaderProps) => {
-  //   const [showOptions, setShowOptions] = React.useState(false);
   const toggleShowOptions = useConversationStore((state) => state.toggleShowOptions);
-  //   const { id } = useLocalSearchParams();
+
+  const [showSearchBar, setShowSearchBar] = React.useState(false);
+  const [searchText, setSearchText] = React.useState('');
+
   const { id } = useGlobalSearchParams();
-
-  //   const selectedConversation = messagesArray.find((msg) => msg.id === id);
-
-  //   const selectedConversation = React.useMemo(() => {
-  //     if (!id) return undefined;
-  //     return messagesArray.find((msg) => String(msg.id) === String(id));
-  //   }, [id, messagesArray]);
 
   const selectedConversation = useConversationStore((state) => state.selectedConversation);
 
@@ -73,20 +68,17 @@ export const Header = ({ onSearchChange, onSearchSubmit, searchValue }: HeaderPr
           <TouchableOpacity>
             <Video size={24} color={colors.zinc['600']} />
           </TouchableOpacity>
-          {/* <TouchableOpacity onPress={() => setShowOptions((prev) => !prev)}> */}
           <TouchableOpacity onPress={toggleShowOptions}>
             <Ellipsis size={24} color={colors.zinc['600']} />
           </TouchableOpacity>
         </>
       ) : (
         <>
-          {/* <TouchableOpacity onPress={() => setShowOptions((prev) => !prev)}> */}
           <TouchableOpacity onPress={toggleShowOptions}>
             <Ellipsis size={24} color={colors.zinc['600']} />
           </TouchableOpacity>
         </>
       )}
-      
     </View>
   );
 };
@@ -125,8 +117,8 @@ const styles = StyleSheet.create({
   search: {
     flex: 1,
     paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 8,
+    paddingVertical: 4,
+    borderRadius: 999,
     backgroundColor: '#18181b',
     fontSize: 16,
     color: colors.zinc[900],

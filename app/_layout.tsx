@@ -64,28 +64,11 @@ export default function Layout() {
   const isLargeScreen = width >= 768;
   // const { id } = useLocalSearchParams();
   const { id } = useGlobalSearchParams();
-  // const selectedConversation = messagesArray.find((msg) => msg.id === id);
-  // const [selectedConversation, setSelectedConversation] = React.useState<
-  //   | {
-  //       id: string;
-  //       name: string;
-  //       message: string;
-  //       time: string;
-  //       avatar: ImageSourcePropType;
-  //     }
-  //   | undefined
-  // >(undefined);
+
   const setSelectedConversation = useConversationStore((state) => state.setSelectedConversation);
   const selectedConversation = useConversationStore((state) => state.selectedConversation);
 
   const showOptions = useConversationStore((state) => state.showOptions);
-
-  // React.useEffect(() => {
-  //   if (id && messagesArray.length > 0) {
-  //     const found = messagesArray.find((msg) => String(msg.id) === String(id));
-  //     setSelectedConversation(found);
-  //   }
-  // }, [id, messagesArray]);
 
   React.useEffect(() => {
     console.log('Selected conversation:', selectedConversation);
@@ -108,11 +91,6 @@ export default function Layout() {
     );
   };
 
-  // const handleSelectMessage = (id: string) => {
-  //   const selected = messagesArray.find((msg) => msg.id === id);
-  //   setSelectedConversation(selected);
-  //   router.push(`/message/${id}`);
-  // };
   const handleSelectMessage = (id: string) => {
     const selected = messagesArray.find((msg) => msg.id === id);
     setSelectedConversation(selected);
@@ -188,8 +166,6 @@ export default function Layout() {
             gap: 12,
           }}>
           {messagesArray.map((msg) => (
-            // <Message key={msg.id} data={msg} onPress={() => router.replace(`/message/${msg.id}`)} />
-            // <Message key={msg.id} data={msg} onPress={() => router.push(`/message/${msg.id}`)} />
             <Message key={msg.id} data={msg} onPress={() => handleSelectMessage(msg.id)} />
           ))}
         </View>
@@ -219,7 +195,7 @@ export default function Layout() {
                       placeholder="Message"
                     />
                     {/* Plus icon (right) */}
-                    <TouchableOpacity style={styles.iconButton}>
+                    <TouchableOpacity style={styles.audioIcon}>
                       <AudioLines size={24} color={colors.zinc['600']} />
                     </TouchableOpacity>
                   </View>
@@ -262,16 +238,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.zinc[300],
     borderRadius: 32,
-    paddingHorizontal: 16,
     height: 32,
     backgroundColor: '#09090b',
+    position: 'relative',
   },
 
   input: {
     flex: 1,
     color: colors.zinc[900],
-    paddingVertical: 0,
+    paddingHorizontal: 12,
     marginVertical: 0,
+    height: '100%',
+    width: '100%',
+    borderRadius: 32,
   },
 
   iconButton: {
@@ -290,6 +269,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
+    width: 180,
   },
   optionButton: {
     paddingVertical: 10,
@@ -298,5 +278,13 @@ const styles = StyleSheet.create({
   optionText: {
     color: '#fff',
     fontSize: 16,
+  },
+
+  audioIcon: {
+    position: 'absolute',
+    right: 8, // fine-tune spacing from the edge
+    top: '50%',
+    transform: [{ translateY: -12 }], // vertically center based on your icon size
+    zIndex: 999,
   },
 });
