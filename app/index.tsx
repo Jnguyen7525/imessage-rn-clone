@@ -69,9 +69,16 @@ export default function Home() {
           headerShown: showSearchBar ? false : true,
           headerTintColor: '#fff',
           title: 'Messages',
-          headerLargeTitle: true,
+          headerTitleAlign: 'left',
+          // headerLargeTitle: true,
           headerTransparent: true,
           headerBlurEffect: 'systemChromeMaterialDark',
+          headerTitleStyle: {
+            // color: 'blue',
+            // fontSize: 22,
+            fontFamily: 'Georgia',
+            fontWeight: 'ultralight',
+          },
           // headerSearchBarOptions: {
           //   hideWhenScrolling: true,
           //   placeholder: 'Search...',
@@ -174,14 +181,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#09090b',
-    paddingTop: 100,
+    paddingTop: 80,
     position: 'relative',
     width: '100%',
   },
 
   messageContainer: {
     flex: 1,
-    gap: 8,
+    gap: 24,
     paddingHorizontal: 16,
     // paddingTop: Constants.statusBarHeight * 2,
     // paddingBottom: 44,
@@ -239,6 +246,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 16,
     paddingHorizontal: 10,
+    marginVertical: 10,
+    height: 40,
     borderColor: '#ccc', // ✅ Add a visible border color
     borderWidth: 1, // ✅ Define border width
     borderRadius: 999, // ✅ Add rounded corners

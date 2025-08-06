@@ -206,6 +206,7 @@ export default function MessageThreadScreen() {
       <Stack.Screen
         options={{
           headerStyle: {
+            // backgroundColor: '#09090b',
             backgroundColor: 'rgba(60, 60, 65, 0.3)',
           },
           headerTintColor: '#007AFF',
@@ -352,8 +353,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerUserAvatar: {
-    width: 40,
-    height: 40,
+    width: 36,
+    height: 36,
     borderRadius: 40,
     resizeMode: 'cover',
   },
@@ -465,6 +466,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 16,
     paddingHorizontal: 10,
+    marginVertical: 10,
+    height: 40,
     borderColor: '#ccc', // ✅ Add a visible border color
     borderWidth: 1, // ✅ Define border width
     borderRadius: 999, // ✅ Add rounded corners

@@ -1,8 +1,10 @@
 // import { colors } from '@/theme/colors';
 // import { conversationMessages } from '@/utils/messages';
 import { StyleSheet, Text, View } from 'react-native';
+import { SvgXml } from 'react-native-svg';
 import { colors } from 'theme/color';
 import { conversationMessages } from 'utils/messages';
+import { curlLeft, curlRight } from './ChatBubble';
 
 type ConversationMessageProps = {
   data: (typeof conversationMessages)[0];
@@ -18,11 +20,19 @@ export const ConversationMessage = (props: ConversationMessageProps) => {
           backgroundColor: props.data.amISender ? colors.blue['normal'] : '#18181b',
         },
       ]}>
+      <SvgXml
+        xml={props.data.amISender ? curlRight : curlLeft}
+        width={20}
+        height={20}
+        style={props.data.amISender ? styles.curlRight : styles.curlLeft}
+        color={props.data.amISender ? colors.blue['normal'] : '#18181b'} // ✅ dynamic color
+      />
+
       <Text
         style={[
           styles.text,
           {
-            color: props.data.amISender ? colors.zinc['100'] : '#ffff',
+            color: props.data.amISender ? '#ffff' : '#ffff',
           },
         ]}>
         {props.data.text}
@@ -38,13 +48,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     paddingHorizontal: 14,
     paddingVertical: 7,
-    borderRadius: 15,
+    borderRadius: 99,
     zIndex: 0,
+    justifyContent: 'center',
   },
 
   text: {
     fontSize: 16,
     lineHeight: 22,
+    zIndex: 0,
+  },
+  curlRight: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    zIndex: 0,
+  },
+  curlLeft: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
     zIndex: 0,
   },
 });

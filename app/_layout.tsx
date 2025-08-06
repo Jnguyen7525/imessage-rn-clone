@@ -173,9 +173,9 @@ export default function Layout() {
         <View style={{ flex: 1, padding: 16 }}>
           {selectedConversation ? (
             <>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 12 }}>
+              {/* <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 12, color: '#fff' }}>
                 {selectedConversation.name}
-              </Text>
+              </Text> */}
               {conversationMessages.map((msg) => (
                 <ConversationMessage key={msg.id} data={msg} />
               ))}

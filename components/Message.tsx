@@ -57,9 +57,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     gap: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.zinc['200'],
-    paddingBottom: 8,
+    alignItems: 'center',
+    // borderBottomWidth: 1,
+    // borderBottomColor: colors.zinc['200'],
+    // paddingBottom: 16,
   },
   avatar: {
     width: 45,
@@ -77,13 +78,13 @@ const styles = StyleSheet.create({
   },
   textSenderName: {
     fontSize: 17,
-    fontWeight: 'bold',
-    color: colors.zinc['900'],
+    // fontWeight: 'bold',
+    color: '#ffff',
     lineHeight: 22,
   },
   textSentTime: {
     fontSize: 15,
-    color: colors.zinc['600'],
+    color: '#ffff',
     lineHeight: 20,
   },
   textsMessagePreview: {
