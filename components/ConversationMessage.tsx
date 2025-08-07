@@ -17,7 +17,9 @@ export const ConversationMessage = (props: ConversationMessageProps) => {
         styles.container,
         {
           alignSelf: props.data.amISender ? 'flex-end' : 'flex-start',
-          backgroundColor: props.data.amISender ? colors.blue['normal'] : '#18181b',
+          backgroundColor: props.data.amISender ? colors.blue['normal'] : '#27272a',
+          // borderColor: '#121435',
+          // borderWidth: 1,
         },
       ]}>
       <SvgXml
@@ -25,7 +27,7 @@ export const ConversationMessage = (props: ConversationMessageProps) => {
         width={20}
         height={20}
         style={props.data.amISender ? styles.curlRight : styles.curlLeft}
-        color={props.data.amISender ? colors.blue['normal'] : '#18181b'} // ✅ dynamic color
+        color={props.data.amISender ? colors.blue['normal'] : '#27272a'} // ✅ dynamic color
       />
 
       <Text

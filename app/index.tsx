@@ -95,10 +95,10 @@ export default function Home() {
             return (
               <View style={styles.headerIconsRight}>
                 <TouchableOpacity onPress={() => setShowSearchBar(true)}>
-                  <Search size={24} color={colors.zinc['600']} />
+                  <Search size={24} color={'#851de0'} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={toggleShowOptions}>
-                  <Ellipsis size={24} color={colors.zinc['600']} />
+                  <Ellipsis size={24} color={'#851de0'} />
                 </TouchableOpacity>
               </View>
             );
@@ -121,7 +121,7 @@ export default function Home() {
                 setShowSearchBar(false);
                 setSearchText('');
               }}>
-              <X size={20} color={colors.zinc['600']} />
+              <X size={20} color={'#851de0'} />
             </TouchableOpacity>
           </View>
         </View>
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
 
   messageContainer: {
     flex: 1,
-    gap: 24,
+    gap: 30,
     paddingHorizontal: 16,
     // paddingTop: Constants.statusBarHeight * 2,
     // paddingBottom: 44,
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 10,
     height: 40,
-    borderColor: '#ccc', // ✅ Add a visible border color
+    borderColor: '#27272a', // ✅ Add a visible border color
     borderWidth: 1, // ✅ Define border width
     borderRadius: 999, // ✅ Add rounded corners
   },

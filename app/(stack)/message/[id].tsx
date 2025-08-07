@@ -209,7 +209,7 @@ export default function MessageThreadScreen() {
             // backgroundColor: '#09090b',
             backgroundColor: 'rgba(60, 60, 65, 0.3)',
           },
-          headerTintColor: '#007AFF',
+          headerTintColor: '#851de0',
           headerShown: showSearchBar ? false : true,
           headerLargeTitle: true,
           headerTransparent: true,
@@ -229,20 +229,16 @@ export default function MessageThreadScreen() {
             return (
               <View style={styles.headerIconsRight}>
                 <TouchableOpacity>
-                  <Phone size={24} color={colors.zinc['600']} />
+                  <Phone size={24} color={'#851de0'} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <Video size={24} color={colors.zinc['600']} />
+                  <Video size={24} color={'#851de0'} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <Search
-                    size={24}
-                    color={colors.zinc['600']}
-                    onPress={() => setShowSearchBar(true)}
-                  />
+                  <Search size={24} color={'#851de0'} onPress={() => setShowSearchBar(true)} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={toggleShowOptions}>
-                  <Ellipsis size={24} color={colors.zinc['600']} />
+                  <Ellipsis size={24} color={'#851de0'} />
                 </TouchableOpacity>
               </View>
             );
@@ -265,7 +261,7 @@ export default function MessageThreadScreen() {
                 setShowSearchBar(false);
                 setSearchText('');
               }}>
-              <X size={20} color={colors.zinc['600']} />
+              <X size={20} color={'#851de0'} />
             </TouchableOpacity>
           </View>
         </View>
@@ -319,7 +315,7 @@ export default function MessageThreadScreen() {
         <View style={styles.inputWrapper}>
           <View style={styles.inputRow}>
             <TouchableOpacity style={styles.iconButton}>
-              <Plus size={24} color={colors.zinc['600']} />
+              <Plus size={24} color={'#851de0'} />
             </TouchableOpacity>
 
             {/* Input field (center) */}
@@ -330,7 +326,7 @@ export default function MessageThreadScreen() {
                 placeholder="Message"
               />
               <TouchableOpacity style={styles.iconButton}>
-                <AudioLines size={24} color={colors.zinc['600']} />
+                <AudioLines size={24} color={'#851de0'} />
               </TouchableOpacity>
             </View>
           </View>
@@ -393,7 +389,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colors.zinc[300],
+    borderColor: '#27272a',
     borderRadius: 32,
     paddingHorizontal: 16,
     height: 32,
@@ -468,7 +464,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 10,
     height: 40,
-    borderColor: '#ccc', // ✅ Add a visible border color
+    borderColor: '#27272a', // ✅ Add a visible border color
     borderWidth: 1, // ✅ Define border width
     borderRadius: 999, // ✅ Add rounded corners
   },

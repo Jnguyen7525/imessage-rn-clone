@@ -41,7 +41,7 @@ export const Header = ({ onSearchChange, onSearchSubmit, searchValue }: HeaderPr
   const isLargeScreen = width >= 768;
 
   return (
-    <View style={[styles.header, { paddingHorizontal: isLargeScreen ? 24 : 16 }]}>
+    <View style={[styles.header, { paddingHorizontal: isLargeScreen ? 30 : 16 }]}>
       {selectedConversation ? (
         <View style={styles.userInfo}>
           <Image style={styles.avatar} source={selectedConversation.avatar} />
@@ -63,19 +63,19 @@ export const Header = ({ onSearchChange, onSearchSubmit, searchValue }: HeaderPr
       {selectedConversation ? (
         <>
           <TouchableOpacity>
-            <Phone size={24} color={colors.zinc['600']} />
+            <Phone size={24} color={'#851de0'} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Video size={24} color={colors.zinc['600']} />
+            <Video size={24} color={'#851de0'} />
           </TouchableOpacity>
           <TouchableOpacity onPress={toggleShowOptions}>
-            <Ellipsis size={24} color={colors.zinc['600']} />
+            <Ellipsis size={24} color={'#851de0'} />
           </TouchableOpacity>
         </>
       ) : (
         <>
           <TouchableOpacity onPress={toggleShowOptions}>
-            <Ellipsis size={24} color={colors.zinc['600']} />
+            <Ellipsis size={24} color={'#851de0'} />
           </TouchableOpacity>
         </>
       )}
@@ -86,9 +86,10 @@ export const Header = ({ onSearchChange, onSearchSubmit, searchValue }: HeaderPr
 const styles = StyleSheet.create({
   header: {
     paddingVertical: 12,
+    // paddingHorizontal: 24,
     backgroundColor: '#09090b',
     borderBottomWidth: 1,
-    borderColor: '#a1a1aa',
+    borderColor: '#27272a',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -119,8 +120,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 999,
-    backgroundColor: '#18181b',
+    borderColor: '#27272a',
+    borderWidth: 1,
+    // backgroundColor: '#18181b',
     fontSize: 16,
+    marginHorizontal: 60,
     color: colors.zinc[900],
   },
   dropdown: {

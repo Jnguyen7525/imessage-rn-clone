@@ -159,18 +159,19 @@ export default function Layout() {
         {/* Sidebar / Inbox */}
         <View
           style={{
-            width: 320,
+            width: 350,
             borderRightWidth: 1,
-            borderColor: '#a1a1aa',
-            padding: 16,
-            gap: 12,
+            borderColor: '#27272a',
+            paddingVertical: 36,
+            paddingHorizontal: 30,
+            gap: 24,
           }}>
           {messagesArray.map((msg) => (
             <Message key={msg.id} data={msg} onPress={() => handleSelectMessage(msg.id)} />
           ))}
         </View>
         {/* Conversation Thread */}
-        <View style={{ flex: 1, padding: 16 }}>
+        <View style={{ flex: 1, paddingVertical: 36, paddingHorizontal: 30 }}>
           {selectedConversation ? (
             <>
               {/* <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 12, color: '#fff' }}>
@@ -184,7 +185,7 @@ export default function Layout() {
                 <View style={styles.inputRow}>
                   {/* Audio icon (left) */}
                   <TouchableOpacity style={styles.iconButton}>
-                    <Plus size={24} color={colors.zinc['600']} />
+                    <Plus size={24} color={'#851de0'} />
                   </TouchableOpacity>
 
                   {/* Input field (center) */}
@@ -196,7 +197,7 @@ export default function Layout() {
                     />
                     {/* Plus icon (right) */}
                     <TouchableOpacity style={styles.audioIcon}>
-                      <AudioLines size={24} color={colors.zinc['600']} />
+                      <AudioLines size={24} color={'#851de0'} />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -219,15 +220,16 @@ const styles = StyleSheet.create({
   inputWrapper: {
     width: '100%',
     backgroundColor: colors.zinc[50],
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    paddingBottom: 24,
+    marginTop: 24,
+    // paddingVertical: 8,
+    // paddingHorizontal: 16,
+    // paddingBottom: 0,
   },
 
   inputRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 12,
     width: '100%',
   },
 
@@ -236,7 +238,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colors.zinc[300],
+    borderColor: '#27272a',
     borderRadius: 32,
     height: 32,
     backgroundColor: '#09090b',
@@ -245,7 +247,7 @@ const styles = StyleSheet.create({
 
   input: {
     flex: 1,
-    color: colors.zinc[900],
+    // color: 'colors.zinc[900]',
     paddingHorizontal: 12,
     marginVertical: 0,
     height: '100%',
